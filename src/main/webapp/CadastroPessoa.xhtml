@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:h ="http://xmlns.jcp.org/jsf/html"
+xmlns:f ="http://xmlns.jcp.org/jsf/core"
+xmlns:ui ="http://xmlns.jcp.org/jsf/facelets"
+xmlns:p="http://primefaces.org/ui"
+
+>
+
+
+<h:head >
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<h:outputStylesheet  library="css" name="file.css"/>
+
+<title>Insert title here</title>
+</h:head>
+
+<h:body>
+
+<p:graphicImage library="imagens" name="oficial.jpg" width="200" />
+
+<h:form id="form">
+   <h1>Informaçao de Cadstro</h1>
+   
+   <p:panel header="Cadastro de clientes">
+   <h:panelGrid columns="2">
+          <p:outputLabel value="Nome"/>
+          <p:inputText value="#{bean.pessoa.nome}" size="50" id="nomePessoa" onkeyup="teste()" />
+          <p:outputLabel value="E-mail"/>
+          <p:inputText value="#{bean.pessoa.email}" size="50" id="emailPessoa" />
+          <p:outputLabel />
+          <p:commandButton value="Adicionar" action="#{bean.adicionar}" update="form tabelaPessoa"/>
+          <p:outputLabel />
+          <p:commandButton value="Listar"  action="#{bean.ListarTodos}" />    
+         
+          <p:ajax event="keyup" update="out" listener="#{bean.AjaxBehaviorEvent}" />
+         
+          <h:outputText id="out"  value="#{bean.pessoa.nome}" />
+          
+          <script>
+          function teste(){
+        	  
+        	  var elem = document.getElementById('form:nomePessoa');
+        	  var sizeElem = elem.value.length;
+        	  
+        	  if(sizeElem > 4){
+        		  
+        		  elem = document.getElementById('form:emailPessoa');
+        		  elem.select(); 
+        	  }
+        	  
+          }
+          </script>
+          
+            
+   </h:panelGrid>
+   </p:panel>
+   
+ 
+</h:form>
+
+<h1>Teste-Listagem</h1>
+ 
+<p:dataTable value="#{bean.pessoas}" var="p" border="1" id="tabelaPessoa">
+<p:column headerText="Nome">#{p.nome}</p:column>
+<p:column  headerText="Email"   >#{p.email}</p:column>
+
+<p:column headerText="Editar"  width="80" >
+   <p:button value="Editar" outcome="/paginas/Sucesso.xhtml?parametro=#{p.nome}"  />
+</p:column>
+
+</p:dataTable>
+
+</h:body>
+
+
+
+</html>
